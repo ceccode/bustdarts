@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -20,6 +20,8 @@ export default function Setup() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { startMatch, settings } = useAppStore();
+  const [searchParams] = useSearchParams();
+  const solo = searchParams.get('solo') === '1';
 
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -57,10 +59,14 @@ export default function Setup() {
       },
     };
     await db.players.add(profile);
-    setSelected(prev => prev.length < 4 ? [...prev, id] : prev);
+    setSelected(prev => solo ? [id] : (prev.length < 4 ? [...prev, id] : prev));
   }
 
   function handleToggle(id: string) {
+    if (solo) {
+      setSelected(prev => (prev[0] === id ? [] : [id]));
+      return;
+    }
     setSelected(prev => {
       if (prev.includes(id)) return prev.filter(x => x !== id);
       if (prev.length >= 4) return prev;
@@ -80,6 +86,20 @@ export default function Setup() {
   }
 
   function handleNext() {
+    if (step === 0 && solo) {
+      const player = players.find(p => p.id === selected[0]);
+      if (!player) return;
+      startMatch({
+        variant: 501,
+        setsToWin: 1,
+        legsToWin: 3,
+        doubleOut: true,
+        inputMode: settings.inputMode,
+        players: [{ id: player.id, name: player.name, color: player.avatarColor || colorFromName(player.name) }],
+      });
+      navigate('/game');
+      return;
+    }
     if (step === 0) {
       setOrder([...selected]);
       setStep(1);
@@ -112,12 +132,12 @@ export default function Setup() {
     else setStep(s => s - 1);
   }
 
-  const canNext = step === 0 ? selected.length >= 2 : true;
+  const canNext = step === 0 ? selected.length >= (solo ? 1 : 2) : true;
 
   return (
     <Screen style={{ padding: '16px 16px 100px' }}>
       <TopBar
-        title={t(STEPS[step])}
+        title={solo ? t('trainingStep') : t(STEPS[step])}
         left={
           <GhostBtn onClick={handleBack} style={{ padding: '4px 0' }}>
             <ChevronLeft size={20} /> {t('back')}
@@ -126,20 +146,22 @@ export default function Setup() {
       />
 
       {/* Step dots */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 24 }}>
-        {STEPS.map((_, i) => (
-          <div
-            key={i}
-            style={{
-              width: i === step ? 20 : 8,
-              height: 8,
-              borderRadius: 4,
-              background: i === step ? 'rgb(var(--accent))' : i < step ? 'rgb(var(--accent-dim))' : 'rgb(var(--bg-input))',
-              transition: 'all .2s',
-            }}
-          />
-        ))}
-      </div>
+      {!solo && (
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 24 }}>
+          {STEPS.map((_, i) => (
+            <div
+              key={i}
+              style={{
+                width: i === step ? 20 : 8,
+                height: 8,
+                borderRadius: 4,
+                background: i === step ? 'rgb(var(--accent))' : i < step ? 'rgb(var(--accent-dim))' : 'rgb(var(--bg-input))',
+                transition: 'all .2s',
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {step === 0 && (
         <StepPlayers
@@ -189,7 +211,7 @@ export default function Setup() {
         }}
       >
         <PrimaryBtn full onClick={handleNext} disabled={!canNext}>
-          {step === 2 ? t('start') : t('next')}
+          {solo ? t('startTraining') : step === 2 ? t('start') : t('next')}
         </PrimaryBtn>
       </div>
     </Screen>

@@ -85,5 +85,8 @@
   "letUsStart": "Let's start",
   "roastLabel": "Roast",
   "bestLeg": "Best leg",
-  "darts": "darts"
+  "darts": "darts",
+  "training": "Training",
+  "startTraining": "Start training",
+  "trainingStep": "Who's throwing?"
 }

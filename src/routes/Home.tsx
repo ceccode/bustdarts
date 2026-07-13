@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Settings, PlayCircle, ChevronRight, Trophy, Clock, RotateCcw } from 'lucide-react';
+import { Settings, PlayCircle, ChevronRight, Trophy, Clock, RotateCcw, Target } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BustBadge, BustLogo } from '../components/BustLogo';
 import { Avatar } from '../components/Avatar';
@@ -117,6 +117,15 @@ export default function Home() {
           {t('quickStart')}
         </GhostBtn>
       )}
+
+      {/* Solo training shortcut */}
+      <GhostBtn
+        onClick={() => navigate('/setup?solo=1')}
+        style={{ width: '100%', justifyContent: 'center', marginBottom: 8 }}
+      >
+        <Target size={14} />
+        {t('training')}
+      </GhostBtn>
 
       {/* Players */}
       <SectionLabel

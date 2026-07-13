@@ -85,5 +85,8 @@
   "letUsStart": "Iniziamo",
   "roastLabel": "Roast",
   "bestLeg": "Best leg",
-  "darts": "dardi"
+  "darts": "dardi",
+  "training": "Allenamento",
+  "startTraining": "Inizia allenamento",
+  "trainingStep": "Chi tira?"
 }
