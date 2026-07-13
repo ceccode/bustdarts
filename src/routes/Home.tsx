@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Settings, PlayCircle, ChevronRight, Trophy, Clock } from 'lucide-react';
+import { Settings, PlayCircle, ChevronRight, Trophy, Clock, RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BustBadge, BustLogo } from '../components/BustLogo';
 import { Avatar } from '../components/Avatar';
@@ -8,12 +8,16 @@ import { Card } from '../components/ui/Card';
 import { IconBtn, GhostBtn } from '../components/ui/Buttons';
 import { SectionLabel } from '../components/ui/Layout';
 import { db } from '../lib/db';
+import { useAppStore } from '../stores/app-store';
 import { Screen } from '../components/ui/Layout';
 import type { PlayerProfile, Match } from '../lib/types';
 
 export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const activeMatch = useAppStore(s => s.activeMatch);
+  const resumable = activeMatch && !activeMatch.finished;
 
   const players = useLiveQuery<PlayerProfile[]>(() => db.players.orderBy('createdAt').toArray(), []);
   const recentMatches = useLiveQuery<Match[]>(
@@ -40,6 +44,40 @@ export default function Home() {
           onClick={() => navigate('/settings')}
         />
       </div>
+
+      {/* Resume in-progress match */}
+      {resumable && (
+        <button
+          onClick={() => navigate('/game')}
+          style={{
+            width: '100%',
+            background: 'rgba(57,255,20,0.08)',
+            border: '1px solid rgba(57,255,20,0.4)',
+            borderRadius: 16,
+            padding: '16px 20px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 16,
+            marginBottom: 8,
+            boxShadow: '0 0 16px 2px rgba(57,255,20,0.12)',
+          }}
+        >
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, fontWeight: 600, color: 'rgb(var(--accent))', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>
+              {activeMatch.variant} · S{activeMatch.currentLeg.setNumber} L{activeMatch.currentLeg.legNumber}
+            </div>
+            <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 20, color: 'rgb(var(--text-primary))', letterSpacing: '-0.01em' }}>
+              {t('resumeMatch')}
+            </div>
+            <div style={{ fontSize: 12, color: 'rgb(var(--text-muted))', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {activeMatch.players.map(p => p.name).join(' vs ')}
+            </div>
+          </div>
+          <RotateCcw size={32} color="rgb(var(--accent))" strokeWidth={1.5} />
+        </button>
+      )}
 
       {/* Main CTA */}
       <button
