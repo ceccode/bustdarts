@@ -45,7 +45,7 @@ export default function Splash() {
           letterSpacing: '0.05em',
         }}
       >
-        {t('version')}
+        {t('version', { version: __APP_VERSION__ })}
       </div>
     </div>
   );

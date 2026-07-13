@@ -95,7 +95,7 @@ export default function Onboarding() {
             textAlign: 'center',
           }}
         >
-          {t('version')}
+          {t('version', { version: __APP_VERSION__ })}
         </div>
       </div>
     </div>
