@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# Bust! 🎯
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Offline-first darts scoreboard for X01, built as an installable PWA.**
 
-Currently, two official plugins are available:
+No accounts, no cloud, no tracking. Your matches, players and stats live entirely on your device (IndexedDB) — pick up a phone at the pub with no signal and keep scoring.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Philosophy
 
-## React Compiler
+Most darts apps ask you to sign up, sync to the cloud, or watch ads between legs. Bust! is the opposite: install it once, and it works forever, fully offline, with your data staying private and local. No backend, no account, no bullshit.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **X01 scoring** — 301 / 501 / 701, with sets & legs, double-out or straight-out
+- **Up to 4 players** — local multiplayer, one device passed around
+- **Two input modes** — quick total-score entry, or detailed per-dart input
+- **Checkout suggestions** — standard 2/3-dart finishing combinations, live as you close in on zero
+- **Undo** — fix a mis-tap without restarting the leg
+- **Player profiles & stats** — 3-dart average, first-9 average, best leg, best checkout, 100+/140+/180 counts, double %, all saved locally and reused across matches
+- **Match history** — review past matches, per-leg breakdown
+- **Post-match roast** — a bit of trash talk generated from how the match went, because darts should be fun
+- **Fully offline PWA** — installable on iOS/Android/desktop, works with zero connectivity
+- **i18n** — Italian and English, more languages welcome via PR
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19 + TypeScript + Vite
+- Zustand (state), Dexie (IndexedDB)
+- Tailwind CSS
+- react-i18next (IT/EN)
+- vite-plugin-pwa
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Other commands: `npm run build`, `npm run lint`, `npm run preview`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Contributing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Issues and PRs are welcome — especially new languages, checkout tables for other rulesets, or UI polish.
+
+## License
+
+MIT, see [LICENSE](./LICENSE).
