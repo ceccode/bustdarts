@@ -41,7 +41,7 @@ export default function Onboarding() {
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, maxWidth: 340, width: '100%' }}>
         <BustBadge size={68} />
-        <BustLogo size={56} withTagline />
+        <BustLogo size={80} withTagline />
 
         <p
           style={{
