@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CornerDownLeft, RotateCcw } from 'lucide-react';
 import { validateTotal } from '../../lib/game-engine';
 import { IMPOSSIBLE_TOTALS } from '../../lib/checkouts';
+import { playTap } from '../../lib/sound';
 
 interface Props {
   remaining: number;
@@ -9,6 +10,7 @@ interface Props {
   onConfirm: (total: number) => void;
   onUndo: () => void;
   hapticEnabled?: boolean;
+  soundEnabled?: boolean;
 }
 
 const QUICK_SCORES = [26, 41, 45, 60, 81, 100, 140, 180];
@@ -17,7 +19,7 @@ function haptic() {
   if (navigator.vibrate) navigator.vibrate(10);
 }
 
-export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEnabled }: Props) {
+export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEnabled, soundEnabled }: Props) {
   const [input, setInput] = useState('');
 
   const total = input === '' ? 0 : parseInt(input, 10);
@@ -39,6 +41,7 @@ export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEna
 
   function pressDigit(d: string) {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     setInput(prev => {
       const next = prev + d;
       const val = parseInt(next, 10);
@@ -49,6 +52,7 @@ export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEna
 
   function pressDelete() {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     setInput(prev => prev.slice(0, -1));
   }
 
@@ -56,18 +60,21 @@ export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEna
     if (!hasInput) return;
     if (!isValid && !isBust) return;
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     onConfirm(total);
     setInput('');
   }
 
   function pressQuick(score: number) {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     onConfirm(score);
     setInput('');
   }
 
   function pressUndo() {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     onUndo();
     setInput('');
   }

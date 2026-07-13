@@ -10,6 +10,7 @@ import { CheckoutHint } from '../components/CheckoutHint';
 import { Avatar } from '../components/Avatar';
 import { PrimaryBtn, SecondaryBtn, GhostBtn } from '../components/ui/Buttons';
 import { db } from '../lib/db';
+import { playBust, play180, playCheckout } from '../lib/sound';
 import type { Match, LegRecord, TurnRecord, MatchPlayer } from '../lib/types';
 
 type Overlay = 'none' | 'bust' | '180' | 'legWon' | 'pause';
@@ -41,6 +42,7 @@ export default function Game() {
 
     if (v.bust) {
       setOverlay('bust');
+      if (settings.soundEnabled) playBust();
       const updated = applyTurn(activeMatch, total);
       if (updated) setActiveMatch(updated);
       setTimeout(() => setOverlay('none'), 1200);
@@ -49,6 +51,7 @@ export default function Game() {
 
     if (total === 180) {
       setOverlay('180');
+      if (settings.soundEnabled) play180();
       setTimeout(() => setOverlay('none'), 900);
     }
 
@@ -58,6 +61,7 @@ export default function Game() {
 
     if (updated.currentLeg.finished) {
       setOverlay('legWon');
+      if (settings.soundEnabled) playCheckout();
       if (updated.finished) {
         saveMatch(updated).catch(console.error).finally(() => navigate('/result'));
       }
@@ -263,6 +267,7 @@ export default function Game() {
               onConfirm={handleTurn}
               onUndo={handleUndo}
               hapticEnabled={hapticEnabled}
+              soundEnabled={settings.soundEnabled}
             />
           ) : (
             <TotalKeypad
@@ -271,6 +276,7 @@ export default function Game() {
               onConfirm={handleTurn}
               onUndo={handleUndo}
               hapticEnabled={hapticEnabled}
+              soundEnabled={settings.soundEnabled}
             />
           )
         )}

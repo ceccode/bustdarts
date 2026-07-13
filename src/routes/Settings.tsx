@@ -14,7 +14,7 @@ import i18n from '../i18n';
 export default function Settings() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { settings, setSettings } = useAppStore();
+  const { settings, setSettings, setActiveMatch } = useAppStore();
   const [confirmReset, setConfirmReset] = useState(false);
 
   async function update(patch: Partial<typeof settings>) {
@@ -34,6 +34,7 @@ export default function Settings() {
   async function handleReset() {
     await db.matches.clear();
     await db.players.clear();
+    setActiveMatch(null);
     setConfirmReset(false);
   }
 

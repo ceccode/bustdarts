@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CornerDownLeft, RotateCcw } from 'lucide-react';
 import { validateTotal } from '../../lib/game-engine';
+import { playTap } from '../../lib/sound';
 
 interface Props {
   remaining: number;
@@ -8,6 +9,7 @@ interface Props {
   onConfirm: (total: number) => void;
   onUndo: () => void;
   hapticEnabled?: boolean;
+  soundEnabled?: boolean;
 }
 
 type Multiplier = 1 | 2 | 3;
@@ -34,7 +36,7 @@ function dartLabel(d: Dart): string {
   return `T${d.value}`;
 }
 
-export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEnabled }: Props) {
+export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEnabled, soundEnabled }: Props) {
   const [darts, setDarts] = useState<Dart[]>([]);
   const [multiplier, setMultiplier] = useState<Multiplier>(1);
 
@@ -46,6 +48,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
 
   function addDart(value: number) {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     if (darts.length >= 3) return;
     const d: Dart = { value, multiplier, display: '' };
     d.display = dartLabel(d);
@@ -67,11 +70,13 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
 
   function removeLast() {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     setDarts(prev => prev.slice(0, -1));
   }
 
   function confirmManual() {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     onConfirm(total);
     setDarts([]);
     setMultiplier(1);
@@ -79,6 +84,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
 
   function pressUndo() {
     if (hapticEnabled) haptic();
+    if (soundEnabled) playTap();
     setDarts([]);
     setMultiplier(1);
     onUndo();
@@ -193,7 +199,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
         {([1, 2, 3] as Multiplier[]).map(m => (
           <button
             key={m}
-            onClick={() => { if (hapticEnabled) haptic(); setMultiplier(m); }}
+            onClick={() => { if (hapticEnabled) haptic(); if (soundEnabled) playTap(); setMultiplier(m); }}
             style={multActive(m)}
           >
             {m === 1 ? 'Single' : m === 2 ? 'Double' : 'Triple'}
@@ -235,7 +241,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
           Bull
         </button>
         <button
-          onClick={() => { if (hapticEnabled) haptic(); if (darts.length < 3) { const prev = multiplier; setMultiplier(2); addDart(25); setMultiplier(prev); } }}
+          onClick={() => { if (hapticEnabled) haptic(); if (soundEnabled) playTap(); if (darts.length < 3) { const prev = multiplier; setMultiplier(2); addDart(25); setMultiplier(prev); } }}
           disabled={darts.length >= 3}
           style={{
             ...keyStyle,
