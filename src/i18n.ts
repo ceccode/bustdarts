@@ -20,4 +20,11 @@ i18next
     interpolation: { escapeValue: false },
   });
 
+function syncDocumentLang(language: string) {
+  document.documentElement.lang = language;
+}
+
+syncDocumentLang(lng);
+i18next.on('languageChanged', syncDocumentLang);
+
 export default i18next;
