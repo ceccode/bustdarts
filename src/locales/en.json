@@ -80,7 +80,7 @@
   "resetConfirm": "Delete all data?",
   "yes": "Yes",
   "no": "No",
-  "version": "v0.1.0 · MIT · made for the garage",
+  "version": "v{{version}} · MIT · made for the garage",
   "onboardingText": "No accounts. No cloud. No fuss. Open, play, laugh.",
   "letUsStart": "Let's start",
   "roastLabel": "Roast",

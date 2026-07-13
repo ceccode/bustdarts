@@ -141,7 +141,7 @@ export default function Settings() {
           letterSpacing: '0.04em',
         }}
       >
-        {t('version')}
+        {t('version', { version: __APP_VERSION__ })}
       </div>
 
       {/* Reset confirm modal */}
