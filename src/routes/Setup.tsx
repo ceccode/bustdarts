@@ -201,7 +201,7 @@ export default function Setup() {
       {/* Next button */}
       <div
         style={{
-          position: 'fixed',
+          position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,

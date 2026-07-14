@@ -34,7 +34,7 @@
 
 html {
   font-family: Inter, sans-serif;
-  background: #0A0A0B;
+  background: rgb(var(--bg-base));
 }
 
 * {
@@ -46,6 +46,25 @@ body {
   margin: 0;
   padding: 0;
   overscroll-behavior: none;
+}
+
+/* App frame: keep the mobile-first layout centered and phone-width on
+   wide screens instead of stretching full-bleed. Overlays inside screens
+   use position: absolute so they stay contained within this frame. */
+#root {
+  position: relative;
+  min-height: 100dvh;
+  max-width: 560px;
+  margin: 0 auto;
+  background: rgb(var(--bg-base));
+}
+
+@media (min-width: 561px) {
+  #root {
+    box-shadow:
+      0 0 0 1px rgb(var(--border-default)),
+      0 40px 80px -40px rgba(0, 0, 0, 0.5);
+  }
 }
 
 @keyframes bustShake {

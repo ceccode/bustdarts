@@ -149,7 +149,7 @@ export default function Settings() {
       {confirmReset && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             inset: 0,
             background: 'rgba(0,0,0,0.7)',
             display: 'flex',

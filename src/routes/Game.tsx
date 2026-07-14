@@ -286,7 +286,7 @@ export default function Game() {
       {overlay === 'bust' && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'center',
@@ -318,7 +318,7 @@ export default function Game() {
       {overlay === '180' && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'center',
@@ -349,7 +349,7 @@ export default function Game() {
       {overlay === 'legWon' && !activeMatch.finished && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'flex-end',
@@ -392,7 +392,7 @@ export default function Game() {
       {overlay === 'pause' && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'flex-end',
