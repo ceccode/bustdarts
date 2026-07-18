@@ -15,13 +15,13 @@ export default function Onboarding() {
   const [lang, setLangState] = useState<'it' | 'en'>(settings.language);
 
   async function handleStart() {
+    localStorage.setItem('bust-launched', '1');
+    localStorage.setItem('bust-lang', lang);
     const newSettings = { ...settings, language: lang };
     setSettings(newSettings);
-    await saveSettings(newSettings);
     i18n.changeLanguage(lang);
-    localStorage.setItem('bust-lang', lang);
-    localStorage.setItem('bust-launched', '1');
     navigate('/', { replace: true });
+    await saveSettings(newSettings);
   }
 
   return (

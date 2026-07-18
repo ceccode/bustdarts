@@ -216,7 +216,7 @@ export default function Result() {
           bottom: 0,
           left: 0,
           right: 0,
-          padding: '16px',
+          padding: '16px 16px calc(16px + env(safe-area-inset-bottom))',
           background: 'rgb(var(--bg-base))',
           borderTop: '1px solid rgb(var(--border-default))',
           display: 'flex',

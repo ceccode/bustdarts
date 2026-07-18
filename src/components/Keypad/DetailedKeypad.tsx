@@ -267,6 +267,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
         </button>
         <button
           onClick={removeLast}
+          aria-label="Delete"
           style={{
             ...keyStyle,
             height: 40,
@@ -278,6 +279,7 @@ export function DetailedKeypad({ remaining, doubleOut, onConfirm, onUndo, haptic
         <button
           onClick={confirmManual}
           disabled={darts.length === 0}
+          aria-label="Confirm"
           style={{
             ...keyStyle,
             height: 40,

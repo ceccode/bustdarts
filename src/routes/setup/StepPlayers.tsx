@@ -69,7 +69,7 @@ export function StepPlayers({ players, selected, onToggle, onAddPlayer }: Props)
               padding: '10px 12px',
               color: 'rgb(var(--text-primary))',
               fontFamily: 'Inter, sans-serif',
-              fontSize: 15,
+              fontSize: 16,
               outline: 'none',
             }}
           />

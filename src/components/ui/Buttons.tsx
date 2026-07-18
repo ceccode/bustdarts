@@ -6,13 +6,15 @@ interface BtnProps {
   full?: boolean;
   disabled?: boolean;
   style?: CSSProperties;
+  ariaLabel?: string;
 }
 
-export function PrimaryBtn({ children, onClick, full, disabled, style }: BtnProps) {
+export function PrimaryBtn({ children, onClick, full, disabled, style, ariaLabel }: BtnProps) {
   return (
     <button
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      aria-label={ariaLabel}
       style={{
         background: disabled ? 'rgb(var(--bg-input))' : 'rgb(var(--accent))',
         color: disabled ? 'rgb(var(--text-muted))' : 'rgb(var(--accent-text))',
@@ -37,10 +39,11 @@ export function PrimaryBtn({ children, onClick, full, disabled, style }: BtnProp
   );
 }
 
-export function SecondaryBtn({ children, onClick, full, style }: BtnProps) {
+export function SecondaryBtn({ children, onClick, full, style, ariaLabel }: BtnProps) {
   return (
     <button
       onClick={onClick}
+      aria-label={ariaLabel}
       style={{
         background: 'rgb(var(--bg-input))',
         color: 'rgb(var(--text-primary))',
@@ -64,10 +67,11 @@ export function SecondaryBtn({ children, onClick, full, style }: BtnProps) {
   );
 }
 
-export function GhostBtn({ children, onClick, style }: BtnProps) {
+export function GhostBtn({ children, onClick, style, ariaLabel }: BtnProps) {
   return (
     <button
       onClick={onClick}
+      aria-label={ariaLabel}
       style={{
         background: 'transparent',
         color: 'rgb(var(--text-secondary))',
@@ -93,12 +97,14 @@ interface IconBtnProps {
   onClick?: () => void;
   size?: number;
   style?: CSSProperties;
+  ariaLabel?: string;
 }
 
-export function IconBtn({ icon, onClick, size = 40, style }: IconBtnProps) {
+export function IconBtn({ icon, onClick, size = 40, style, ariaLabel }: IconBtnProps) {
   return (
     <button
       onClick={onClick}
+      aria-label={ariaLabel}
       style={{
         width: size,
         height: size,

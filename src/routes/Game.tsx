@@ -171,6 +171,7 @@ export default function Game() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <button
           onClick={() => setOverlay('pause')}
+          aria-label={t('paused')}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgb(var(--text-secondary))', padding: 4 }}
         >
           <Menu size={22} />
@@ -183,7 +184,7 @@ export default function Game() {
             {activeMatch.variant}
           </div>
         </div>
-        <GhostBtn onClick={handleUndo} style={{ padding: '4px 0' }}>
+        <GhostBtn onClick={handleUndo} ariaLabel={t('undoTurn')} style={{ padding: '4px 0' }}>
           <RotateCcw size={16} />
         </GhostBtn>
       </div>
@@ -356,7 +357,7 @@ export default function Game() {
             justifyContent: 'center',
             background: 'rgba(0,0,0,0.6)',
             zIndex: 100,
-            padding: '0 16px 32px',
+            padding: '0 16px calc(32px + env(safe-area-inset-bottom))',
             animation: 'fadeIn 0.2s ease-out',
           }}
         >
@@ -399,7 +400,7 @@ export default function Game() {
             justifyContent: 'center',
             background: 'rgba(0,0,0,0.7)',
             zIndex: 100,
-            padding: '0 16px 32px',
+            padding: '0 16px calc(32px + env(safe-area-inset-bottom))',
           }}
         >
           <div
@@ -415,7 +416,7 @@ export default function Game() {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 18 }}>{t('paused')}</div>
-              <button onClick={() => setOverlay('none')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgb(var(--text-secondary))', padding: 4 }}>
+              <button onClick={() => setOverlay('none')} aria-label={t('resume')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgb(var(--text-secondary))', padding: 4 }}>
                 <X size={20} />
               </button>
             </div>

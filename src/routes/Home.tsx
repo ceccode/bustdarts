@@ -42,6 +42,7 @@ export default function Home() {
         <IconBtn
           icon={<Settings size={18} color="rgb(var(--text-secondary))" />}
           onClick={() => navigate('/settings')}
+          ariaLabel={t('settings')}
         />
       </div>
 

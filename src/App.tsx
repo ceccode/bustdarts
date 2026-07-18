@@ -12,6 +12,11 @@ import History from './routes/History';
 import Player from './routes/Player';
 import Settings from './routes/Settings';
 
+function HomeGate() {
+  const launched = localStorage.getItem('bust-launched');
+  return launched ? <Home /> : <Navigate to="/splash" replace />;
+}
+
 export default function App() {
   const { theme, setSettings } = useAppStore();
 
@@ -23,11 +28,9 @@ export default function App() {
     document.documentElement.classList.toggle('theme-light', theme === 'light');
   }, [theme]);
 
-  const launched = localStorage.getItem('bust-launched');
-
   return (
     <Routes>
-      <Route path="/" element={launched ? <Home /> : <Navigate to="/splash" replace />} />
+      <Route path="/" element={<HomeGate />} />
       <Route path="/splash" element={<Splash />} />
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/setup" element={<Setup />} />

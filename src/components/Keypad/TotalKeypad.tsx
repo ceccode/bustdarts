@@ -196,6 +196,7 @@ export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEna
         <button
           onClick={pressDelete}
           onContextMenu={e => { e.preventDefault(); pressUndo(); }}
+          aria-label="Delete"
           style={{
             ...keyStyle,
             fontSize: 14,
@@ -209,6 +210,7 @@ export function TotalKeypad({ remaining, doubleOut, onConfirm, onUndo, hapticEna
         </button>
         <button
           onClick={pressConfirm}
+          aria-label="Confirm"
           style={{
             ...keyStyle,
             background:
